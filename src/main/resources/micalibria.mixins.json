@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.micalobia.micalibria.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "block.BlockMixin", "client.network.ClientPlayerInteractionManagerMixin", "client.particle.ParticleManagerMixin",
+    "client.render.block.BlockRenderManagerMixin", "entity.EntityMixin", "entity.LivingEntityMixin",
+    "item.BlockItemMixin", "server.network.ServerPlayerInteractionManagerMixin", "server.world.ServerWorldMixin",
+    "world.WorldMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

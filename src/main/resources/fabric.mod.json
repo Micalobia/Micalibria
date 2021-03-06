@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "micalibria",
+  "version": "${version}",
+
+  "name": "Micalibria",
+  "description": "This is an example description! Tell everyone what your mod is about!",
+  "authors": [
+    "Micalobia"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/micalibria/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.micalobia.micalibria.MicalibriaMod"
+    ]
+  },
+  "mixins": [
+    "micalibria.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
