@@ -13,11 +13,11 @@ import java.util.Optional;
 public interface SetBlockStateEvent {
 	Event<SetBlockStateEvent> EVENT = EventFactory.createArrayBacked(
 			SetBlockStateEvent.class,
-			(listeners) -> (world, pos, state, moved) -> {
+			(listeners) -> (world, pos, state, entity, moved) -> {
 				BlockState passingState = state;
-				BlockEntity passingEntity = null;
+				BlockEntity passingEntity = entity;
 				for(SetBlockStateEvent callback : listeners) {
-					PairedEventReaction<BlockState, Optional<BlockEntity>> ret = callback.getState(world, pos, state, moved);
+					PairedEventReaction<BlockState, Optional<BlockEntity>> ret = callback.getState(world, pos, state, entity, moved);
 					switch(ret.getReaction()) {
 						case CANCEL:
 							return PairedEventReaction.cancel();
@@ -35,5 +35,5 @@ public interface SetBlockStateEvent {
 			}
 	);
 
-	PairedEventReaction<BlockState, Optional<BlockEntity>> getState(World world, BlockPos pos, BlockState state, boolean moved);
+	PairedEventReaction<BlockState, Optional<BlockEntity>> getState(World world, BlockPos pos, BlockState state, BlockEntity entity, boolean moved);
 }

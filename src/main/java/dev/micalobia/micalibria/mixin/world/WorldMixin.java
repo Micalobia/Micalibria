@@ -30,7 +30,7 @@ public class WorldMixin {
 	@Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/chunk/WorldChunk;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Z)Lnet/minecraft/block/BlockState;"), method = "setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;II)Z")
 	public BlockState setBlockStateHook(WorldChunk worldChunk, BlockPos pos, BlockState state, boolean moved) {
 		PairedEventReaction<BlockState, Optional<BlockEntity>> value =
-				SetBlockStateEvent.EVENT.invoker().getState(self(), pos, state, moved);
+				SetBlockStateEvent.EVENT.invoker().getState(self(), pos, state, null, moved);
 		switch(value.getReaction()) {
 			case IGNORE:
 				return worldChunk.setBlockState(pos, state, moved);

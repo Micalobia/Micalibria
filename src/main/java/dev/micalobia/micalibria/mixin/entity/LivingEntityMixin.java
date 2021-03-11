@@ -29,7 +29,7 @@ public abstract class LivingEntityMixin extends Entity {
 	}
 
 	//@Redirect(method = "fall", at = @At(value = "NEW", target = "net/minecraft/particle/BlockStateParticleEffect"))
-	@Inject(method = "fall", cancellable = true, at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;spawnParticles(Lnet/minecraft/particle/ParticleEffect;DDDIDDDD)I"), locals = LocalCapture.PRINT)
+	@Inject(method = "fall", cancellable = true, at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;spawnParticles(Lnet/minecraft/particle/ParticleEffect;DDDIDDDD)I"), locals = LocalCapture.CAPTURE_FAILSOFT)
 	public void hitGroundParticlesHook(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition, CallbackInfo ci, float f, double d, int i) {
 		TypedEventReaction<BlockState> ret = HitGroundParticlesEvent.EVENT.invoker().getState(state, self());
 		if(ret.getReaction() != EventReaction.IGNORE) {
