@@ -1,12 +1,15 @@
 package dev.micalobia.micalibria.block;
 
+import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.state.property.Property;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import virtuoel.statement.api.StateRefresher;
 
 
 public class BlockUtility {
@@ -29,5 +32,25 @@ public class BlockUtility {
 
 	public static <B extends Block> B register(Identifier id, B block) {
 		return Registry.register(Registry.BLOCK, id, block);
+	}
+
+	public static <B extends Block, P extends Comparable<P>> void injectBlockstateProperty(Class<B> klass, Property<P> property, P defaultValue) {
+		injectBlockstateProperty(klass, property, defaultValue, true);
+	}
+
+	public static <B extends Block, P extends Comparable<P>> void injectBlockstateProperty(Class<B> klass, Property<P> property, P defaultValue, boolean includeFutureBlocks) {
+		Registry.BLOCK.forEach(block -> {
+			if(klass.isAssignableFrom(block.getClass()))
+				StateRefresher.INSTANCE.addBlockProperty(block, property, defaultValue);
+		});
+		if(includeFutureBlocks) RegistryEntryAddedCallback.event(Registry.BLOCK).register((rawId, id, block) -> {
+			if(klass.isAssignableFrom(block.getClass()))
+				StateRefresher.INSTANCE.addBlockProperty(block, property, defaultValue);
+		});
+		StateRefresher.INSTANCE.reorderBlockStates();
+	}
+
+	public static <P extends Comparable<P>> void injectBlockstateProperty(Block block, Property<P> property, P defaultValue) {
+		StateRefresher.INSTANCE.addBlockProperty(block, property, defaultValue);
 	}
 }
