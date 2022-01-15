@@ -1,4 +1,4 @@
-package dev.micalobia.micalibria.block.entity;
+package dev.micalobia.micalibria.block;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
