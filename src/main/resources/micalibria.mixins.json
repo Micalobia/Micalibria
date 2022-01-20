@@ -4,6 +4,7 @@
   "package": "dev.micalobia.micalibria.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "block.ImmovableTagMixin",
     "item.ItemAccessor"
   ],
   "client": [
