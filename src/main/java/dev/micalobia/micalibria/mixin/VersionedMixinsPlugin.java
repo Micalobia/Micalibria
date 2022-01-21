@@ -29,17 +29,19 @@ public class VersionedMixinsPlugin implements IMixinConfigPlugin {
 		String version = SharedConstants.VERSION_NAME;
 		var matcher = versionPattern.matcher(version);
 		if(!matcher.matches()) return false;
-		var minMatcher = versionPattern.matcher(Objects.requireNonNullElse(minimum, "0.0.0"));
+		var minMatcher = versionPattern.matcher(Objects.requireNonNullElse(minimum, "0"));
 		if(!minMatcher.matches()) throw new IllegalArgumentException("minimum was not valid!");
-		var maxMatcher = versionPattern.matcher(Objects.requireNonNullElse(maximum, "999.999.999"));
+		var maxMatcher = versionPattern.matcher(Objects.requireNonNullElse(maximum, "2147483647"));
 		if(!maxMatcher.matches()) throw new IllegalArgumentException("maximum was not valid!");
-		for(int i = 0; i < 3; ++i) {
-			if(matcher.groupCount() >= i) return true;
-			var val = Integer.parseInt(matcher.group(i));
-			var min = minMatcher.groupCount() >= i ? 0 : Integer.parseInt(minMatcher.group(i));
-			if(val < min) return false;
-			var max = maxMatcher.groupCount() >= i ? 999 : Integer.parseInt(maxMatcher.group(i));
-			if(val > max) return false;
+		for(int i = 1; i <= 3; ++i) {
+			var group = matcher.group(i);
+			if(group == null) return true;
+			var val = Integer.parseInt(group);
+			var minGroup = minMatcher.group(i);
+			if(minGroup != null && val < Integer.parseInt(minGroup)) return false;
+			var maxGroup = maxMatcher.group(i);
+			if(maxGroup != null && val > Integer.parseInt(maxGroup)) return false;
+			if(maxGroup == null && minGroup == null) return true;
 		}
 		return true;
 	}
