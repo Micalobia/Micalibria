@@ -1,6 +1,6 @@
 package dev.micalobia.micalibria.mixin.block;
 
-import dev.micalobia.micalibria.block.MicalibriaBlockTags;
+import dev.micalobia.micalibria.util.CommonTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PistonBlock;
 import net.minecraft.util.math.BlockPos;
@@ -15,6 +15,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class ImmovableTagMixin {
 	@Inject(method = "isMovable", at = @At(value = "HEAD"), cancellable = true)
 	private static void Micalibria$addImmovableTag(BlockState state, World world, BlockPos pos, Direction direction, boolean canBreak, Direction pistonDir, CallbackInfoReturnable<Boolean> cir) {
-		if(state.isIn(MicalibriaBlockTags.IMMOVABLE)) cir.setReturnValue(false);
+		if(state.isIn(CommonTags.IMMOVABLE)) cir.setReturnValue(false);
 	}
 }
