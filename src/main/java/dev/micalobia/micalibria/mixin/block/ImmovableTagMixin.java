@@ -15,6 +15,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class ImmovableTagMixin {
 	@Inject(method = "isMovable", at = @At(value = "HEAD"), cancellable = true)
 	private static void Micalibria$addImmovableTag(BlockState state, World world, BlockPos pos, Direction direction, boolean canBreak, Direction pistonDir, CallbackInfoReturnable<Boolean> cir) {
-		if(state.isIn(CommonTags.IMMOVABLE)) cir.setReturnValue(false);
+		if(state.isIn(CommonTags.Block.IMMOVABLE)) cir.setReturnValue(false);
 	}
 }
