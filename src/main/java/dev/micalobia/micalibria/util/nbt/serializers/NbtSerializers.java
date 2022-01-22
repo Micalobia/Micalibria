@@ -1,5 +1,6 @@
-package dev.micalobia.micalibria.util.nbt;
+package dev.micalobia.micalibria.util.nbt.serializers;
 
+import dev.micalobia.micalibria.util.nbt.NbtSerializer;
 import net.minecraft.nbt.*;
 
 public class NbtSerializers {
