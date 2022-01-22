@@ -9,4 +9,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface NbtSerializable {
 	boolean cacheable() default true;
+
+	Class<? extends NbtSerializer> serializer() default NbtSerializer.class;
 }

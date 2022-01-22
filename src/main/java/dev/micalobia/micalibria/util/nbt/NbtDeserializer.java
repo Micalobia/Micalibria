@@ -1,11 +1,8 @@
 package dev.micalobia.micalibria.util.nbt;
 
-import net.minecraft.nbt.NbtCompound;
+import dev.micalobia.micalibria.util.nbt.exceptions.NbtParseException;
+import net.minecraft.nbt.NbtElement;
 
 public interface NbtDeserializer<T> {
-	T deserialize(NbtCompound nbt);
-
-	default T deserialize() {
-		return deserialize(new NbtCompound());
-	}
+	T deserialize(NbtElement nbt) throws NbtParseException;
 }
