@@ -24,8 +24,9 @@ public class VersionedMixinsPlugin implements IMixinConfigPlugin {
 	private static final Pattern versionRangePattern =
 			Pattern.compile("\\.(?!__\\.)(?<min>\\d+(?:(?:_\\d+)?_\\d+)?)?__(?<max>\\d+(?:(?:_\\d+)?_\\d+)?)?\\.");
 
+
+	@SuppressWarnings("deprecation")
 	private static boolean between_version(@Nullable String minimum, @Nullable String maximum) {
-		//noinspection deprecation
 		String version = SharedConstants.VERSION_NAME;
 		var matcher = versionPattern.matcher(version);
 		if(!matcher.matches()) return false;
