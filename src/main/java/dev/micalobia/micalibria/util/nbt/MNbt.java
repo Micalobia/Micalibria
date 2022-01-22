@@ -1,5 +1,6 @@
 package dev.micalobia.micalibria.util.nbt;
 
+import com.google.gson.JsonElement;
 import dev.micalobia.micalibria.util.nbt.exceptions.MissingNbtDeserializerException;
 import dev.micalobia.micalibria.util.nbt.exceptions.MissingNbtSerializerException;
 import dev.micalobia.micalibria.util.nbt.exceptions.NbtParseException;
@@ -92,6 +93,7 @@ public class MNbt {
 			put(int[].class, NbtDeserializers.INT_ARRAY);
 			put(long[].class, NbtDeserializers.LONG_ARRAY);
 			put(Boolean.class, NbtDeserializers.BOOLEAN);
+			put(JsonElement.class, NbtDeserializers.JSON_ELEMENT);
 			put(Byte.class, NbtSerializers.BYTE);
 			put(Short.class, NbtSerializers.SHORT);
 			put(Integer.class, NbtSerializers.INT);
