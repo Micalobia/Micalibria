@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,20 +17,20 @@ import java.util.Objects;
 
 @SuppressWarnings("rawtypes")
 public class MNbt {
-	private final Map<Class<?>, NbtDeserializer> deserializers;
-	private final Map<Class<?>, NbtSerializer> serializers;
-	private final Map<Class<?>, NbtDeserializerSupplier> uncachedDeserializers;
-	private final Map<Class<?>, NbtSerializerSupplier> uncachedSerializers;
-	private final Map<Class<?>, Boolean> registeredDeserializers;
-	private final Map<Class<?>, Boolean> registeredSerializers;
+	private final Map<Type, NbtDeserializer> deserializers;
+	private final Map<Type, NbtSerializer> serializers;
+	private final Map<Type, NbtDeserializerSupplier> uncachedDeserializers;
+	private final Map<Type, NbtSerializerSupplier> uncachedSerializers;
+	private final Map<Type, Boolean> registeredDeserializers;
+	private final Map<Type, Boolean> registeredSerializers;
 
 	private MNbt(
-			Map<Class<?>, NbtDeserializer> deserializers,
-			Map<Class<?>, NbtSerializer> serializers,
-			Map<Class<?>, NbtDeserializerSupplier> uncachedDeserializers,
-			Map<Class<?>, NbtSerializerSupplier> uncachedSerializers,
-			Map<Class<?>, Boolean> registeredDeserializers,
-			Map<Class<?>, Boolean> registeredSerializers
+			Map<Type, NbtDeserializer> deserializers,
+			Map<Type, NbtSerializer> serializers,
+			Map<Type, NbtDeserializerSupplier> uncachedDeserializers,
+			Map<Type, NbtSerializerSupplier> uncachedSerializers,
+			Map<Type, Boolean> registeredDeserializers,
+			Map<Type, Boolean> registeredSerializers
 	) {
 		this.deserializers = deserializers;
 		this.serializers = serializers;
@@ -47,17 +48,17 @@ public class MNbt {
 		NbtSerializer<T> serializer;
 		if(registeredSerializers.get(klass)) serializer = serializers.get(klass);
 		else serializer = uncachedSerializers.get(klass).get();
-		return serializer.serialize(value);
+		return serializer.serialize(value, this::serialize);
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> T deserialize(NbtElement element, Class<T> klass) {
+	public <T> T deserialize(NbtElement element, Type klass) {
 		if(!registeredDeserializers.containsKey(klass))
-			throw new NbtParseException("Could not find deserializer for " + klass.getName());
+			throw new NbtParseException("Could not find deserializer for " + klass.getTypeName());
 		NbtDeserializer<T> deserializer;
 		if(registeredDeserializers.get(klass)) deserializer = deserializers.get(klass);
 		else deserializer = uncachedDeserializers.get(klass).get();
-		return deserializer.deserialize(element);
+		return deserializer.deserialize(element, this::deserialize);
 	}
 
 	@FunctionalInterface
@@ -71,12 +72,12 @@ public class MNbt {
 	}
 
 	public static final class Builder {
-		private final Map<Class<?>, NbtDeserializer> deserializers = new HashMap<>();
-		private final Map<Class<?>, NbtSerializer> serializers = new HashMap<>();
-		private final Map<Class<?>, NbtDeserializerSupplier> uncachedDeserializers = new HashMap<>();
-		private final Map<Class<?>, NbtSerializerSupplier> uncachedSerializers = new HashMap<>();
-		private final Map<Class<?>, Boolean> registeredDeserializers = new HashMap<>();
-		private final Map<Class<?>, Boolean> registeredSerializers = new HashMap<>();
+		private final Map<Type, NbtDeserializer> deserializers = new HashMap<>();
+		private final Map<Type, NbtSerializer> serializers = new HashMap<>();
+		private final Map<Type, NbtDeserializerSupplier> uncachedDeserializers = new HashMap<>();
+		private final Map<Type, NbtSerializerSupplier> uncachedSerializers = new HashMap<>();
+		private final Map<Type, Boolean> registeredDeserializers = new HashMap<>();
+		private final Map<Type, Boolean> registeredSerializers = new HashMap<>();
 
 		private Builder() {
 			put(Byte.class, NbtDeserializers.BYTE);
