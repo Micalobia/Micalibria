@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  * <br/>
  * <code>.1_16_3__. => After 1.16.3 (inclusive)<br/>
  * .__1_15_2. => Before 1.15.2 (inclusive)<br/>
- * .1_13__1_18_1. => Between 1.13.x and 1.18.1 (inclusive)</code>
+ * .1_13__1_18_1. => Between 1.13.x and 1.18.2 (inclusive)</code>
  */
 public class VersionedMixinsPlugin implements IMixinConfigPlugin {
 	private static final Pattern versionPattern =

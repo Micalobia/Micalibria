@@ -1,12 +1,12 @@
 package dev.micalobia.micalibria.util;
 
-import net.fabricmc.fabric.api.tag.TagFactory;
-import net.minecraft.tag.Tag;
+import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 
 public class CommonTags {
 	public static class Block {
-		public static final Tag<net.minecraft.block.Block> IMMOVABLE = TagFactory.BLOCK.create(new Identifier("c", "immovable"));
+		public static final TagKey<net.minecraft.block.Block> IMMOVABLE = TagKey.of(Registry.BLOCK_KEY, new Identifier("c", "immovable"));
 	}
 }
