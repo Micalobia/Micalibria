@@ -22,7 +22,7 @@ public class NbtDeserializers {
 	@SuppressWarnings("unchecked")
 	public static final NbtDeserializer<JsonElement> JSON_ELEMENT = (nbt, context) -> {
 		switch(nbt.getType()) {
-			case NbtElement.NULL_TYPE:
+			case NbtElement.END_TYPE:
 				return JsonNull.INSTANCE;
 			case NbtElement.BYTE_TYPE:
 			case NbtElement.SHORT_TYPE:

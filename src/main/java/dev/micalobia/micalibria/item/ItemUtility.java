@@ -32,7 +32,7 @@ public class ItemUtility {
 	}
 
 	public static BlockItem register(Block block, BlockItem item) {
-		if(Registry.ITEM.getEntries().stream().map(Entry::getValue).noneMatch(x -> x == item))
+		if(Registry.ITEM.getEntrySet().stream().map(Entry::getValue).noneMatch(x -> x == item))
 			Registry.register(Registry.ITEM, Registry.BLOCK.getId(block), item);
 		Item.BLOCK_ITEMS.put(block, item);
 		return item;
