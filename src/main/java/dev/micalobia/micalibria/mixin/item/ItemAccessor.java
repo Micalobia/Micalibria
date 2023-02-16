@@ -1,7 +1,6 @@
 package dev.micalobia.micalibria.mixin.item;
 
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Rarity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -24,8 +23,4 @@ public interface ItemAccessor {
 	@Mutable
 	@Accessor
 	void setRarity(Rarity rarity);
-
-	@Mutable
-	@Accessor
-	void setGroup(ItemGroup group);
 }

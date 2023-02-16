@@ -6,9 +6,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.state.property.Property;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import virtuoel.statement.api.StateRefresher;
 
 
@@ -20,18 +21,18 @@ public class BlockUtility {
 
 	public static <E extends BlockEntity> BlockEntityType<E> register(Block block, FabricBlockEntityTypeBuilder.Factory<E> factory) {
 		return Registry.register(
-				Registry.BLOCK_ENTITY_TYPE,
-				Registry.BLOCK.getId(block),
+				Registries.BLOCK_ENTITY_TYPE,
+				Registries.BLOCK.getId(block),
 				FabricBlockEntityTypeBuilder.create(factory, block).build()
 		);
 	}
 
 	public static <B extends Block> B register(String id, B block) {
-		return Registry.register(Registry.BLOCK, id, block);
+		return Registry.register(Registries.BLOCK, id, block);
 	}
 
 	public static <B extends Block> B register(Identifier id, B block) {
-		return Registry.register(Registry.BLOCK, id, block);
+		return Registry.register(Registries.BLOCK, id, block);
 	}
 
 	public static <B extends Block, P extends Comparable<P>> void injectBlockstateProperty(Class<B> klass, Property<P> property, P defaultValue) {
@@ -39,11 +40,11 @@ public class BlockUtility {
 	}
 
 	public static <B extends Block, P extends Comparable<P>> void injectBlockstateProperty(Class<B> klass, Property<P> property, P defaultValue, boolean includeFutureBlocks) {
-		Registry.BLOCK.forEach(block -> {
+		Registries.BLOCK.forEach(block -> {
 			if(klass.isAssignableFrom(block.getClass()))
 				StateRefresher.INSTANCE.addBlockProperty(block, property, defaultValue);
 		});
-		if(includeFutureBlocks) RegistryEntryAddedCallback.event(Registry.BLOCK).register((rawId, id, block) -> {
+		if(includeFutureBlocks) RegistryEntryAddedCallback.event(Registries.BLOCK).register((rawId, id, block) -> {
 			if(klass.isAssignableFrom(block.getClass()))
 				StateRefresher.INSTANCE.addBlockProperty(block, property, defaultValue);
 		});
